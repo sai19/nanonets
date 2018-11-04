@@ -1,3 +1,9 @@
+"""
+This script crops the face from an image.
+Face detection is done using opencv's harrcascade module.
+Written by Saiprasad Koturwar
+"""
+
 import numpy as np
 import cv2
 import os
@@ -11,6 +17,7 @@ def crop_face(img_path,face_cascade):
 	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 	faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 	max_area = 0
+	# return the face with maximum area
 	for (x,y,w,h) in faces:
 		if x*h>max_area:
 			max_area = x*h

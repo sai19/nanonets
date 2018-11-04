@@ -12,24 +12,24 @@ import os
 class Config(object):
     # data preprocessing parameters
     preprocessing_type = None # allowed values [MTCNN,HARR,None]
-    preprocessed_out_dir = "" # output will be saved with same structure as in original directory
+    preprocessing_type_test = "MTCNN"
+    preprocessed_out_dir_test = "../test/" # output will be saved with same structure as in original directory
     # training parameters
     gpu_memory_fraction = 0.7
     data_dir = '../lfw_cleaned/'
-    lfw_dir = '../lfw/'
+    lfw_dir = '../lfw_cleaned/'
     lfw_pairs = 'pairs.txt'
     model_def = 'models.inception_resnet_v1'
-    pretrained_model = '../finetuned_models/20181104-135828/'
+    pretrained_model = './20181104-191806/'
     logs_base_dir = '../logs/'
     models_base_dir = '../finetuned_models/'
-    max_nrof_epochs = 100
-    batch_size = 100
+    max_nrof_epochs = 150
+    batch_size = 90
     im_height = 160
     im_width = 160
     epoch_size = 100# usually = len(training_data)/batch_size
     embedding_size = 512 # dimensionality of the layer before softmax 
     random_crop = True
-    use_perturb = True
     random_flip = True
     random_rotate = True
     img_standardize = True
@@ -71,6 +71,12 @@ class Config(object):
     lfw_distance_metric = 1
     lfw_subtract_mean = True
     lfw_use_flipped_images = True
+    val_batch_size = 100
+    pred_batch_size = 2
+    val_nrof_folds = 2
+    val_distance_metric = 1
+    val_subtract_mean = True
+    use_flipped_images = True
 
     def display(self):
         """Display Configuration values."""

@@ -1,5 +1,7 @@
 '''
-script forked from (https://github.com/davidsandberg/facenet)
+This script contains utility functions for training the facenet network
+forked from https://github.com/davidsandberg/facenet
+Modified by Saiprasad Koturwar
 '''
 
 # pylint: disable=missing-docstring
@@ -76,14 +78,12 @@ def random_rotate_image(image):
     angle = np.random.uniform(low=-10.0, high=10.0)
     return misc.imrotate(image, angle, 'bicubic')
   
-# 1: Random rotate 2: Random crop  4: Random flip  8:  Fixed image standardization  16: Flip 32: Perturb
-# in the powers of 2 to get the conditioning
+# 1: Random rotate 2: Random crop  4: Random flip  8:  Fixed image standardization  16: Flip
 RANDOM_ROTATE = 1
 RANDOM_CROP = 2
 RANDOM_FLIP = 4
 FIXED_STANDARDIZATION = 8
 FLIP = 16
-PERTURB = 32
 def create_input_pipeline(input_queue, image_size, nrof_preprocess_threads, batch_size_placeholder):
     images_and_labels_list = []
     for _ in range(nrof_preprocess_threads):
@@ -104,14 +104,8 @@ def create_input_pipeline(input_queue, image_size, nrof_preprocess_threads, batc
             image = tf.cond(get_control_flag(control[0], FIXED_STANDARDIZATION),
                             lambda:(tf.cast(image, tf.float32) - 127.5)/128.0,
                             lambda:tf.image.per_image_standardization(image))
-            image = tf.cond(get_control_flag(control[0], FIXED_STANDARDIZATION),
-                            lambda:(tf.cast(image, tf.float32) - 127.5)/128.0,
-                            lambda:tf.image.per_image_standardization(image))
             image = tf.cond(get_control_flag(control[0], FLIP),
                             lambda:tf.image.flip_left_right(image),
-                            lambda:tf.identity(image))
-            image = tf.cond(get_control_flag(control[0], PERTURB),
-                            lambda:tf.image.random_hue(image, 0.3),
                             lambda:tf.identity(image))
             #pylint: disable=no-member
             image.set_shape(image_size + (3,))
@@ -436,13 +430,14 @@ def calculate_roc(thresholds, embeddings1, embeddings2, actual_issame, nrof_fold
         for threshold_idx, threshold in enumerate(thresholds):
             _, _, acc_train[threshold_idx] = calculate_accuracy(threshold, dist[train_set], actual_issame[train_set])
         best_threshold_index = np.argmax(acc_train)
+        best_threshold = thresholds[best_threshold_index]
         for threshold_idx, threshold in enumerate(thresholds):
             tprs[fold_idx,threshold_idx], fprs[fold_idx,threshold_idx], _ = calculate_accuracy(threshold, dist[test_set], actual_issame[test_set])
         _, _, accuracy[fold_idx] = calculate_accuracy(thresholds[best_threshold_index], dist[test_set], actual_issame[test_set])
           
         tpr = np.mean(tprs,0)
         fpr = np.mean(fprs,0)
-    return tpr, fpr, accuracy
+    return tpr, fpr, accuracy, best_threshold
 
 def calculate_accuracy(threshold, dist, actual_issame):
     predict_issame = np.less(dist, threshold)
