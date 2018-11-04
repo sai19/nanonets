@@ -11,11 +11,12 @@ python validate_on_lfw.py<br />
 
 > Folder structure options and naming conventions for software projects
 ## Using the module
-Expected training image directory structure<br />
+Expected training image directory structure
+'''
 ├── person1                          
     ├── person1_1.jpg 
     ├── person1_2.jpg                   
-├── person2 <br />               
-  ├── person2_1.jpg <br />
-  ├── person2_2.jpg <br />
-> Use short lowercase names at least for the top-level files and folders except <br />
+├── person2                
+  ├── person2_1.jpg 
+  ├── person2_2.jpg 
+'''
