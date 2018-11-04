@@ -18,7 +18,7 @@ import tensorflow as tf
 import numpy as np
 from pretrained_networks import inception_resnet_v1 as network
 import argparse
-import utils as facenet
+import facenet
 import lfw
 import h5py
 import math
