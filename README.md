@@ -1,6 +1,8 @@
 # Face similarity project
 
 This is a re-implementation of facenet paper. The starter code is available at https://github.com/davidsandberg/facenet
+## Dependencies
+This code was tested on python 2.7 and tensorflow 1.7.0
 
 ## Config 
 Config.py contains all the meta information about the training/testing (e.g. batch_size, learning rate, pretrained_model selection, output_path etc.). Use this file to configure the training and do experiments. Config.py is initialized with the parameters given in starter code. Important attributes in config are listed below: <br />
@@ -36,7 +38,7 @@ root
 ```
 Once the configuration is done, the training can be started.
 ## Data augmentation
-Standard data augmentation such as rotation, flip, crop are used. You can adjust the flag of these augmentation from config file.
+Standard data augmentation such as rotation, flip, crop are used. You can adjust the flag of these augmentation from config file. Built in tensorflow functions have been used to perform the augmentation
 ## Prediction module
 Prediction module expects four parameters: input_a, input_b, multiple_pairs, out_json. The default values of multiple_pairs and out_json are "false" and "prediction.json" respectively. If multiple_pairs is true then input_a, input_b should be csv files with the path info of individual images (sample csv files are provided). The output is the similarity score of all the corrosponding pairs.
 
