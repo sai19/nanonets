@@ -52,4 +52,4 @@ Standard data augmentation such as rotation, flip, crop are used. You can adjust
 Prediction module expects four parameters: input_a, input_b, multiple_pairs, out_json. The default values of multiple_pairs and out_json are "false" and "prediction.json" respectively. If multiple_pairs is true then input_a, input_b should be csv files with the path info of individual images (sample csv files are provided). The output is the similarity score of all the corrosponding pairs.
 
 ## Validation module
-validate_on_lfw is forked as it is from the starter code. This is used to evaluate the performance of the network. The current version achieves an accuracy 0.937, with angle between the embeddings as the measure for similarity. The similarity score can be changed by updating config.py 
+validate_on_lfw is forked as it is from the starter code. This is used to evaluate the performance of the network. The current version achieves an **accuracy 0.937**, with angle between the embeddings as the measure for similarity. The similarity score can be changed by updating config.py 
