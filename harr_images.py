@@ -1,3 +1,8 @@
+"""
+script for preprocessing images for training and testing
+python harr_images.py --input_path_a /path_image_a/ --input_path_b /path_image_b/ --out_dir /path_to_out/
+Written by Saiprasad Koturwar
+"""
 import numpy as np
 import cv2
 import os

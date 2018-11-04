@@ -130,15 +130,15 @@ def distance(embeddings1, embeddings2, distance_metric=0):
 # run the inference on given images
 def evaluate(sess, enqueue_op, image_paths_placeholder, labels_placeholder, phase_train_placeholder, batch_size_placeholder, control_placeholder,
         embeddings, labels, image_paths, actual_issame, batch_size):
+    
     # Run forward pass to calculate embeddings
     print('Runnning forward pass on the images')
     
-    # Enqueue one epoch of image paths and labels
     nrof_embeddings = len(image_paths)*2  # total no. of embeddings
     nrof_images = nrof_embeddings * 1
-    labels_array = np.expand_dims(np.arange(0,nrof_images),1)
-    image_paths_array = np.expand_dims(np.repeat(np.array(image_paths),1),1)
-    control_array = np.zeros_like(labels_array, np.int32)
+    labels_array = np.expand_dims(np.arange(0,nrof_images),1) # not relevant when infering, can be dummy 
+    image_paths_array = np.expand_dims(np.repeat(np.array(image_paths),1),1) # image_paths
+    control_array = np.zeros_like(labels_array, np.int32) # augmentation_info
     # run the session to read the images and perform augmentation(if any) 
     sess.run(enqueue_op, {image_paths_placeholder: image_paths_array, labels_placeholder: labels_array, control_placeholder: control_array})
     # get the embedding of corrosponding images

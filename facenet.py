@@ -1,6 +1,5 @@
 '''
-This script contains utility functions for training the facenet network
-Written by Saiprasad Koturwar
+script forked from (https://github.com/davidsandberg/facenet)
 '''
 
 # pylint: disable=missing-docstring
