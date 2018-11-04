@@ -11,7 +11,7 @@ Config.py contains all the meta information about the training/testing (e.g. bat
 **log_base_dir** (path to save training logs) <br />
 **embedding_size** (face embedding dimension, default=512) <br />
 **distance_metric** (which metric to use, euclidean or cosine similarity)<br />
-
+**val_annotation** (path to groundtruth annotation for evaluation, a sample file is provided)
 
 ## Preprocessing step
 As a preprocessing step, we extract the face from a given image. There are two available options for face detection **"HARR"** and **"MTCNN"**. you can chose this by modifying config.py. The preprocessing step may take a while depending on the data size.
