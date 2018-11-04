@@ -45,9 +45,7 @@ def preprocess(config_):
             argv = ['python',
                     'harr.py',
                      config_.data_dir,
-                     config_.preprocessed_out_dir,
-                    '--image_size', '160',
-                    '--margin', '44']
+                     config_.preprocessed_out_dir]
             print("cleaning the directory using HARR... this may take a while.")
             subprocess.call(argv)
         else:
@@ -215,7 +213,7 @@ def main():
             if pretrained_model:
                 print('Restoring pretrained model: %s' % pretrained_model)
                 #saver.restore(sess, pretrained_model)
-                facenet.load_model(pretrained_model)
+                #facenet.load_model(pretrained_model)
             # Training and validation loop
             print('Running training')
             nrof_steps = config_.max_nrof_epochs*config_.epoch_size
@@ -246,7 +244,7 @@ def main():
                     learning_rate_placeholder, phase_train_placeholder, batch_size_placeholder, control_placeholder, global_step, 
                     total_loss, train_op, summary_op, summary_writer, regularization_losses, config_.learning_rate_schedule_file,
                     stat, cross_entropy_mean, accuracy, learning_rate,
-                    prelogits, prelogits_center_loss, config_.random_rotate, config_.random_crop, config_.random_flip, prelogits_norm, config_.prelogits_hist_max, config_.use_fixed_image_standardization)
+                    prelogits, prelogits_center_loss, config_.random_rotate, config_.random_crop, config_.random_flip, config_.use_perturb, prelogits_norm, config_.prelogits_hist_max, config_.use_fixed_image_standardization)
                 stat['time_train'][epoch-1] = time.time() - t
                 
                 if not cont:
@@ -309,7 +307,7 @@ def train(config_, sess, epoch, image_list, label_list, index_dequeue_op, enqueu
       learning_rate_placeholder, phase_train_placeholder, batch_size_placeholder, control_placeholder, step, 
       loss, train_op, summary_op, summary_writer, reg_losses, learning_rate_schedule_file, 
       stat, cross_entropy_mean, accuracy, 
-      learning_rate, prelogits, prelogits_center_loss, random_rotate, random_crop, random_flip, prelogits_norm, prelogits_hist_max, use_fixed_image_standardization):
+      learning_rate, prelogits, prelogits_center_loss, random_rotate, random_crop, random_flip, use_perturb, prelogits_norm, prelogits_hist_max, use_fixed_image_standardization):
     batch_number = 0
     
     if config_.learning_rate>0.0:
@@ -327,7 +325,7 @@ def train(config_, sess, epoch, image_list, label_list, index_dequeue_op, enqueu
     # Enqueue one epoch of image paths and labels
     labels_array = np.expand_dims(np.array(label_epoch),1)
     image_paths_array = np.expand_dims(np.array(image_epoch),1)
-    control_value = facenet.RANDOM_ROTATE * random_rotate + facenet.RANDOM_CROP * random_crop + facenet.RANDOM_FLIP * random_flip + facenet.FIXED_STANDARDIZATION * use_fixed_image_standardization
+    control_value = facenet.RANDOM_ROTATE * random_rotate + facenet.RANDOM_CROP * random_crop + facenet.RANDOM_FLIP * random_flip + facenet.FIXED_STANDARDIZATION * use_fixed_image_standardization + facenet.PERTURB * use_perturb
     control_array = np.ones_like(labels_array) * control_value
     sess.run(enqueue_op, {image_paths_placeholder: image_paths_array, labels_placeholder: labels_array, control_placeholder: control_array})
 

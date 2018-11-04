@@ -29,6 +29,7 @@ class Config(object):
     epoch_size = 100# usually = len(training_data)/batch_size
     embedding_size = 512 # dimensionality of the layer before softmax 
     random_crop = True
+    use_perturb = True
     random_flip = True
     random_rotate = True
     img_standardize = True

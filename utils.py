@@ -77,12 +77,14 @@ def random_rotate_image(image):
     angle = np.random.uniform(low=-10.0, high=10.0)
     return misc.imrotate(image, angle, 'bicubic')
   
-# 1: Random rotate 2: Random crop  4: Random flip  8:  Fixed image standardization  16: Flip
+# 1: Random rotate 2: Random crop  4: Random flip  8:  Fixed image standardization  16: Flip 32: Perturb
+# in the powers of 2 to get the conditioning
 RANDOM_ROTATE = 1
 RANDOM_CROP = 2
 RANDOM_FLIP = 4
 FIXED_STANDARDIZATION = 8
 FLIP = 16
+PERTURB = 32
 def create_input_pipeline(input_queue, image_size, nrof_preprocess_threads, batch_size_placeholder):
     images_and_labels_list = []
     for _ in range(nrof_preprocess_threads):
@@ -103,8 +105,14 @@ def create_input_pipeline(input_queue, image_size, nrof_preprocess_threads, batc
             image = tf.cond(get_control_flag(control[0], FIXED_STANDARDIZATION),
                             lambda:(tf.cast(image, tf.float32) - 127.5)/128.0,
                             lambda:tf.image.per_image_standardization(image))
+            image = tf.cond(get_control_flag(control[0], FIXED_STANDARDIZATION),
+                            lambda:(tf.cast(image, tf.float32) - 127.5)/128.0,
+                            lambda:tf.image.per_image_standardization(image))
             image = tf.cond(get_control_flag(control[0], FLIP),
                             lambda:tf.image.flip_left_right(image),
+                            lambda:tf.identity(image))
+            image = tf.cond(get_control_flag(control[0], PERTURB),
+                            lambda:tf.image.random_hue(image),
                             lambda:tf.identity(image))
             #pylint: disable=no-member
             image.set_shape(image_size + (3,))
