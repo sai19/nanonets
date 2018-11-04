@@ -22,9 +22,9 @@ Modify the config.py file, and start the training, inference, validation using f
 **python train.py**<br />
 <br />
 **python predict.py --input_path_a path\to\input_a <br />
-  --input_path_b path\to\input_b <br />
-  --multiple_pairs "false" <br />
-  --out_json /path/to/save/predictions**<br />
+      --input_path_b path\to\input_b <br />
+      --multiple_pairs "false" <br />
+      --out_json /path/to/save/predictions**<br />
 <br />
 **python validate_on_lfw.py**<br />
 
