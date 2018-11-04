@@ -19,15 +19,14 @@ As a preprocessing step, we extract the face from a given image. There are two a
 ## Training, predicting and testing
 A trained model that achieves an accuracy of 0.937 is provided (20181104-191806/)<br />
 Modify the config.py file, and start the training, inference, validation using following commands:<br />
-**python train.py**<br />
-<br />
-**python predict.py --input_path_a path\to\input_a <br />
-      --input_path_b path\to\input_b <br />
-      --multiple_pairs "false" <br />
-      --out_json /path/to/save/predictions**<br />
-<br />
-**python validate_on_lfw.py**<br />
-
+```
+python train.py
+python predict.py --input_path_a path\to\input_a 
+      --input_path_b path\to\input_b 
+      --multiple_pairs "false" 
+      --out_json /path/to/save/predictions
+python validate_on_lfw.py
+```
 ## Directory structure for training
 Expected training image directory structure (i.e. every folder should contain the images of a unique person), pass the root path by modifying config.py 
 ```bash
