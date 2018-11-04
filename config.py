@@ -19,11 +19,11 @@ class Config(object):
     lfw_dir = '../lfw/'
     lfw_pairs = 'pairs.txt'
     model_def = 'models.inception_resnet_v1'
-    pretrained_model = '../finetuned_models/20181104-105543/'
+    pretrained_model = '../finetuned_models/20181104-135828/'
     logs_base_dir = '../logs/'
     models_base_dir = '../finetuned_models/'
     max_nrof_epochs = 100
-    batch_size = 90
+    batch_size = 100
     im_height = 160
     im_width = 160
     epoch_size = 100# usually = len(training_data)/batch_size
