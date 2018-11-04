@@ -3,6 +3,7 @@
 evaluation script for similarity score between images
 configure the config.py file and run the script with following command
 python predict.py --image_path_a /path_image_a/ --image_path_b /path_image_b/
+Modified by Saiprasad Koturwar (original code at https://github.com/davidsandberg/facenet)
 '''
 
 from __future__ import absolute_import
@@ -12,7 +13,7 @@ from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import argparse
-import utils as facenet
+import facenet
 import lfw
 import os
 import sys
@@ -23,6 +24,31 @@ from scipy import interpolate
 from config import Config
 import json 
 
+def preprocess(config_,input_path_a,input_path_b):
+    if config_.preprocessing_type_test is not None:
+        if config_.preprocessing_type_test=="MTCNN":
+            argv = ['python',
+                    'align/align_images_mtcnn.py',
+                     input_path_a,
+                     input_path_b,
+                     config_.preprocessed_out_dir_test,
+                    '--image_size', '160',
+                    '--margin', '44']
+            print("cleaning the images using MTCNN...")
+            subprocess.call(argv)
+            print("Done..")
+        elif config_.preprocessing_type_test=="HARR":
+            argv = ['python',
+                    'harr_images.py',
+                     input_path_a,
+                     input_path_b,
+                     config_.preprocessed_out_dir_test]
+            print("cleaning the images using HARR...")
+            subprocess.call(argv)
+            print("Done")
+        else:
+            print("skipping preprocessing") 
+
 def main(args):
     conf = Config()
     conf.display()
@@ -30,7 +56,15 @@ def main(args):
     image_size = (conf.im_height, conf.im_width)
     # Get the paths for the corresponding images
     input_path_a = args.input_path_a
-    input_path_b = args.input_path_b   
+    input_path_b = args.input_path_b
+    # preprocess the input images
+    preprocess(config_,input_path_a,input_path_b)
+    # get the updated values of image names
+    image_path_a,ext_a = os.path.splitext(os.path.split(input_path_a)[1])
+    image_path_b,ext_b = os.path.splitext(os.path.split(input_path_b)[1])[0]
+    image_path_a = os.path.join(config_.preprocessed_out_dir_test, image_path_a+'_cropped'+ext_a) 
+    image_path_b = os.path.join(config_.preprocessed_out_dir_test, image_path_b+'_cropped'+ext_b)   
+    # create the paths for inference
     paths, actual_issame = [(input_path_a,input_path_b)],[False]
     with tf.Graph().as_default():
         with tf.Session() as sess:
@@ -63,6 +97,15 @@ def main(args):
             similarity = evaluate(sess, eval_enqueue_op, image_paths_placeholder, labels_placeholder, phase_train_placeholder, batch_size_placeholder, control_placeholder,
                 embeddings, label_batch, paths, actual_issame,conf.batch_size)
             print("the similarity score of the given images is: {}".format(similarity))
+            # write the output to json
+            if similarity<0.1:
+            	are_same = "Yes"
+            else:
+            	are_same = "No"	
+            out_data = {"similarity_score":similarity,"are_same_people":are_same}
+            #save the info to json file
+            with open("pred_info.json",'w') as outfile:
+            	json.dump(out_data,outfile)
             return similarity
 
 

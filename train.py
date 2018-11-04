@@ -2,7 +2,7 @@
 Script to train the network
 update the config_ file and start the training with following command
 python train.py --pretrained_model = ''
-written by Saiprasad Koturwar
+Modified by Saiprasad Koturwar (original code at https://github.com/davidsandberg/facenet)
 '''
 
 from __future__ import absolute_import
