@@ -111,7 +111,7 @@ def create_input_pipeline(input_queue, image_size, nrof_preprocess_threads, batc
                             lambda:tf.image.flip_left_right(image),
                             lambda:tf.identity(image))
             image = tf.cond(get_control_flag(control[0], PERTURB),
-                            lambda:tf.image.random_hue(image),
+                            lambda:tf.image.random_hue(image, 0.3),
                             lambda:tf.identity(image))
             #pylint: disable=no-member
             image.set_shape(image_size + (3,))
