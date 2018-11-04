@@ -9,6 +9,7 @@ python train.py<br />
 python predict.py<br />
 python validate_on_lfw.py<br />
 
+> Folder structure options and naming conventions for software projects
 ## Using the module
 Expected training image directory structure
 .
@@ -18,3 +19,4 @@ Expected training image directory structure
     ├── person2                                 # Source files (alternatively `lib` or `app`)
       ├── person2_1.jpg
       ├── person2_2.jpg
+> Use short lowercase names at least for the top-level files and folders except
