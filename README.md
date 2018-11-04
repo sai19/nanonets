@@ -8,3 +8,13 @@ Modify the config.py file, and start the training, inference, validation using f
 python train.py<br />
 python predict.py<br />
 python validate_on_lfw.py<br />
+
+## Using the module
+Expected training image directory structure
+.
+    ├── person1                            # Compiled files (alternatively `dist`)
+      ├── person1_1.jpg
+      ├── person1_2.jpg                    # Documentation files (alternatively `doc`)
+    ├── person2                                 # Source files (alternatively `lib` or `app`)
+      ├── person2_1.jpg
+      ├── person2_2.jpg
