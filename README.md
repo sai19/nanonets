@@ -4,15 +4,15 @@ This is a re-implementation of facenet paper. The starter code is available at h
 
 ## Config 
 Config.py contains all the meta information about the training/testing (e.g. batch_size, learning rate, pretrained_model selection, output_path etc.). Use this file to configure the training and do experiments. Config.py is initialized with the parameters given in starter code. Important attributes in config are listed below: <br />
-data_dir (root_dir for training data)<br />
-model_base_dir (path to save checkpoints) <br />
-log_base_dir (path to save training logs) <br />
-embedding_size (face embedding dimension, default=512) <br />
-distance_metric (which metric to use, euclidean or cosine similarity)<br />
+**data_dir** (root_dir for training data)<br />
+**model_base_dir** (path to save checkpoints) <br />
+**log_base_dir** (path to save training logs) <br />
+**embedding_size** (face embedding dimension, default=512) <br />
+**distance_metric** (which metric to use, euclidean or cosine similarity)<br />
 
 
 ## Preprocessing step
-As a preprocessing step, we extract the face from a given image. There are two available options for face detection "HARR" and "MTCNN". you can chose this by modifying config.py. The preprocessing step may take a while depending on the data size.
+As a preprocessing step, we extract the face from a given image. There are two available options for face detection **"HARR"** and **"MTCNN"**. you can chose this by modifying config.py. The preprocessing step may take a while depending on the data size.
 
 ## Training, predicting and testing
 A trained model that achieves an accuracy of 0.937 is provided (20181104-191806/)<br />
