@@ -12,11 +12,23 @@ python validate_on_lfw.py<br />
 > Folder structure options and naming conventions for software projects
 ## Using the module
 Expected training image directory structure
-'''
-├── person1                          
-    ├── person1_1.jpg 
-    ├── person1_2.jpg                   
-├── person2                
-  ├── person2_1.jpg 
-  ├── person2_2.jpg 
-'''
+```bash
+├── app
+│   ├── css
+│   │   ├── **/*.css
+│   ├── favicon.ico
+│   ├── images
+│   ├── index.html
+│   ├── js
+│   │   ├── **/*.js
+│   └── partials/template
+├── dist (or build)
+├── node_modules
+├── bower_components (if using bower)
+├── test
+├── Gruntfile.js/gulpfile.js
+├── README.md
+├── package.json
+├── bower.json (if using bower)
+└── .gitignore
+```
