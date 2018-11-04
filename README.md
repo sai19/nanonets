@@ -12,9 +12,9 @@ python validate_on_lfw.py<br />
 > Folder structure options and naming conventions for software projects
 ## Using the module
 Expected training image directory structure<br />
-├── person1 <br />                           
-  ├── person1_1.jpg <br />
-  ├── person1_2.jpg <br />                   
+├── person1                          
+    ├── person1_1.jpg 
+    ├── person1_2.jpg                   
 ├── person2 <br />               
   ├── person2_1.jpg <br />
   ├── person2_2.jpg <br />
