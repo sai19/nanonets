@@ -10,7 +10,7 @@ python predict.py<br />
 python validate_on_lfw.py<br />
 
 ## Using the module
-Expected training image directory structure (i.e. every folder should contain the images of a unique person), pass the root path to config.py 
+Expected training image directory structure (i.e. every folder should contain the images of a unique person), pass the root path by modifying config.py 
 ```bash
 root
 ├── person1
